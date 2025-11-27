@@ -5,12 +5,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-// Configuration with defaults
 let config = {
   VERIFY_CHANNEL_NAME: process.env.VERIFY_CHANNEL_NAME || 'verify',
   LOG_CHANNEL_NAME: process.env.LOG_CHANNEL_NAME || 'welcome-log',
   MEMBER_ROLE_NAME: process.env.MEMBER_ROLE_NAME || 'Member',
-  VERIFY_BUTTON_TEXT: process.env.VERIFY_BUTTON_TEXT || '✅ ยืนยันตัวตน',
+  VERIFY_BUTTON_TEXT: process.env.VERIFY_BUTTON_TEXT || 'ยืนยันตัวต',
   VERIFY_MESSAGE: process.env.VERIFY_MESSAGE || 'กดปุ่มด้านล่างเพื่อยืนยันและรับ role',
   SUCCESS_MESSAGE: process.env.SUCCESS_MESSAGE || '✅ ยืนยันเรียบร้อย! คุณได้รับ role'
 };
@@ -140,7 +139,7 @@ async function createImage(member, type = 'welcome') {
   return new AttachmentBuilder(canvas.toBuffer(), { name: `${type}.png` });
 }
 
-// Setup verification for all guilds
+
 async function setupVerificationForAllGuilds() {
   for (const guild of client.guilds.cache.values()) {
     try {
@@ -192,8 +191,7 @@ async function setupVerificationForAllGuilds() {
 client.once(Events.ClientReady, async () => {
   console.log(`${client.user.tag} is online and ready!`);
   await setupVerificationForAllGuilds();
-  
-  // Start web server
+
   app.listen(PORT, () => {
     console.log(`🌐 Web panel running on http://localhost:${PORT}`);
   });
@@ -246,7 +244,6 @@ client.on(Events.InteractionCreate, async interaction => {
   });
 });
 
-// Graceful shutdown
 process.on('SIGINT', () => {
   console.log('\n🛑 Shutting down...');
   client.destroy();
